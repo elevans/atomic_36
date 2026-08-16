@@ -7,8 +7,8 @@ units:
   kx: cx
   ky: cy
   # padding vars
-  px: kx + 2
-  py: ky + 2
+  px: kx + 4
+  py: ky + 4
   # render choc spacings
   $default_width: cx
   $default_height: cy
@@ -73,6 +73,10 @@ outlines:
     - what: rectangle
       where: true
       size: [px, py]
+  keys:
+    - what: rectangle
+      where: true
+      size: [kx - 0.5, ky - 0.5]
   board:
     - what: polygon
       operation: stack
@@ -100,11 +104,15 @@ outlines:
         - ref: thumbs_mod_cluster
           shift: [-0.5px, -0.5py]
         - ref: matrix_ring_bottom
-          shift: [0.5px, -0.5py]
+          shift: [1px, -0.5py]
         - ref: matrix_pinky_bottom
           shift: [0.5px, -0.5py]
         - ref: matrix_pinky_bottom
           shift: [-0.5px, -0.5py]
-
+      fillet: 2
+  combo:
+    - name: board
+    - operation: subtract
+      name: keys
 pcbs:
 cases:
