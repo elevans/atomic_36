@@ -60,12 +60,12 @@ points:
           key:
             spread: 1kx + 2.5
             splay: -12
-            shift: [0, -2]
+            shift: [0, -2.1]
         space:
           key:
-            spread: 1kx + 2.5
+            spread: 1kx + 3
             splay: -12
-            shift: [0, -4.5]
+            shift: [0, -4.2]
       rows:
         cluster:
   #mirror: &mirror
@@ -114,7 +114,7 @@ outlines:
         - ref: thumbs_layer_cluster
           shift: [0.3px, -0.5py]
         - ref: thumbs_layer_cluster
-          shift: [-0.5px, -0.5py]
+          shift: [-0.4px, -0.5py]
         - ref: thumbs_mod_cluster
           shift: [-0.5px, -0.5py]
         - ref: matrix_index_bottom
@@ -163,7 +163,7 @@ outlines:
         - ref: thumbs_layer_cluster
           shift: [0.3px, -0.5py]
         - ref: thumbs_layer_cluster
-          shift: [-0.5px, -0.5py]
+          shift: [-0.4px, -0.5py]
         - ref: thumbs_mod_cluster
           shift: [-0.5px, -0.5py]
         - ref: matrix_index_bottom
