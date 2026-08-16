@@ -83,14 +83,22 @@ outlines:
       points:
         - ref: matrix_pinky_top
           shift: [-0.5px, 0.5py]
+        - ref: matrix_pinky_top
+          shift: [0.7px, 0.5py]
         - ref: matrix_ring_top
           shift: [-0.5px, 0.5py]
+        - ref: matrix_ring_top
+          shift: [0.3px, 0.5py]
         - ref: matrix_middle_top
           shift: [-0.5px, 0.5py]
         - ref: matrix_middle_top
           shift: [0.5px, 0.5py]
         - ref: matrix_index_top
-          shift: [0.5px, 0.5py]
+          shift: [-0.3px, 0.5py]
+        - ref: matrix_index_top
+          shift: [0.4py, 0.5py]
+        - ref: matrix_inner_top
+          shift: [-0.3px, 0.5py]
         - ref: matrix_inner_top
           shift: [0.5px, 0.5py]
         - ref: matrix_inner_bottom
