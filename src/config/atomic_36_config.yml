@@ -1,0 +1,38 @@
+meta:
+  engine: 4.1.0
+  version: 0.1.0
+  author: Edward Evans
+units:
+  # proxy spacing vars
+  kx: cx
+  ky: cy
+  # padding vars
+  px: kx + 2
+  py: ky + 2
+points:
+  zones:
+    matrix:
+      key:
+        padding: 1ky
+        spread: 1kx
+      columns:
+        pinky:
+        ring:
+          key:
+            stagger: 5
+        middle:
+          key:
+            stagger: 5
+        index:
+          key:
+            stagger: -5
+        inner:
+          key:
+            stagger: -2.0
+      rows:
+        bottom:
+        home:
+        top:
+outlines:
+pcbs:
+cases:
