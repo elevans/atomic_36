@@ -15,6 +15,9 @@ units:
 points:
   zones:
     matrix:
+      # fix kicad placement
+      anchor:
+        shift: [50, -150]
       key:
         padding: 1ky
         spread: 1kx
@@ -77,7 +80,57 @@ outlines:
     - what: rectangle
       where: true
       size: [kx - 0.5, ky - 0.5]
-  board:
+  pcb_board:
+    - what: polygon
+      operation: stack
+      points:
+        - ref: matrix_pinky_top
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_pinky_top
+          shift: [0.7px, 0.5py]
+        - ref: matrix_ring_top
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_ring_top
+          shift: [0.3px, 0.5py]
+        - ref: matrix_middle_top
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_middle_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_index_top
+          shift: [-0.3px, 0.5py]
+        - ref: matrix_index_top
+          shift: [0.4py, 0.5py]
+        - ref: matrix_inner_top
+          shift: [-0.3px, 0.5py]
+        - ref: matrix_inner_top
+          shift: [0.5px, 0.5py]
+        # MCU / interconnect space
+        - ref: matrix_inner_bottom
+          shift: [0.5px, -0.5py]
+        - ref: thumbs_space_cluster
+          shift: [0.5px, 0.5py]
+        - ref: thumbs_space_cluster
+          shift: [0.5px, -0.5py]
+        - ref: thumbs_layer_cluster
+          shift: [0.3px, -0.5py]
+        - ref: thumbs_layer_cluster
+          shift: [-0.5px, -0.5py]
+        - ref: thumbs_mod_cluster
+          shift: [-0.5px, -0.5py]
+        - ref: matrix_index_bottom
+          shift: [-0.3px, -0.5py]
+        - ref: matrix_middle_bottom
+          shift: [0.3px, -0.7py]
+        - ref: matrix_middle_bottom
+          shift: [-0.3px, -0.7py]
+        - ref: matrix_ring_bottom
+          shift: [-0.3px, -0.5py]
+        - ref: matrix_pinky_bottom
+          shift: [0.5px, -0.5py]
+        - ref: matrix_pinky_bottom
+          shift: [-0.5px, -0.5py]
+      fillet: 2
+  switch_plate:
     - what: polygon
       operation: stack
       points:
@@ -108,19 +161,43 @@ outlines:
         - ref: thumbs_space_cluster
           shift: [0.5px, -0.5py]
         - ref: thumbs_layer_cluster
+          shift: [0.3px, -0.5py]
+        - ref: thumbs_layer_cluster
           shift: [-0.5px, -0.5py]
         - ref: thumbs_mod_cluster
           shift: [-0.5px, -0.5py]
+        - ref: matrix_index_bottom
+          shift: [-0.3px, -0.5py]
+        - ref: matrix_middle_bottom
+          shift: [0.3px, -0.7py]
+        - ref: matrix_middle_bottom
+          shift: [-0.3px, -0.7py]
         - ref: matrix_ring_bottom
-          shift: [1px, -0.5py]
+          shift: [-0.3px, -0.5py]
         - ref: matrix_pinky_bottom
           shift: [0.5px, -0.5py]
         - ref: matrix_pinky_bottom
           shift: [-0.5px, -0.5py]
       fillet: 2
   combo:
-    - name: board
+    - name: pcb_board
     - operation: subtract
       name: keys
 pcbs:
+  left_pcb:
+    template: kicad8
+    outlines:
+      main:
+        outline: pcb_board
+    footprints:
+      keys:
+        what: ceoloide/switch_choc_v1_v2
+        where: true
+        params:
+          reversible: false
+          hotswap: true
+          solder: false
+          include_keycap: true
+          from: "{{column_net}}"
+          to: "{{colrow}}"
 cases:
