@@ -65,6 +65,46 @@ points:
             shift: [0, -4.5]
       rows:
         cluster:
+  #mirror: &mirror
+  #  ref: matrix_inner_home
+  #  distance: 5kx
 outlines:
+  raw:
+    - what: rectangle
+      where: true
+      size: [px, py]
+  board:
+    - what: polygon
+      operation: stack
+      points:
+        - ref: matrix_pinky_top
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_ring_top
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_middle_top
+          shift: [-0.5px, 0.5py]
+        - ref: matrix_middle_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_index_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_inner_top
+          shift: [0.5px, 0.5py]
+        - ref: matrix_inner_bottom
+          shift: [0.5px, -0.5py]
+        - ref: thumbs_space_cluster
+          shift: [0.5px, 0.5py]
+        - ref: thumbs_space_cluster
+          shift: [0.5px, -0.5py]
+        - ref: thumbs_layer_cluster
+          shift: [-0.5px, -0.5py]
+        - ref: thumbs_mod_cluster
+          shift: [-0.5px, -0.5py]
+        - ref: matrix_ring_bottom
+          shift: [0.5px, -0.5py]
+        - ref: matrix_pinky_bottom
+          shift: [0.5px, -0.5py]
+        - ref: matrix_pinky_bottom
+          shift: [-0.5px, -0.5py]
+
 pcbs:
 cases:
