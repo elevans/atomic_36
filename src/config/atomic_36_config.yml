@@ -9,6 +9,9 @@ units:
   # padding vars
   px: kx + 2
   py: ky + 2
+  # render choc spacings
+  $default_width: cx
+  $default_height: cy
 points:
   zones:
     matrix:
@@ -17,8 +20,12 @@ points:
         spread: 1kx
       columns:
         pinky:
+          key:
+            splay: 9
         ring:
           key:
+            spread: 1kx + 1.8
+            splay: -9
             stagger: 5
         middle:
           key:
@@ -28,11 +35,36 @@ points:
             stagger: -5
         inner:
           key:
+            spread: 1kx + 1.2
+            splay: -5
             stagger: -2.0
       rows:
         bottom:
         home:
         top:
+    thumbs:
+      key:
+        padding: 1ky
+        spread: 1kx
+      anchor:
+        ref: matrix_index_bottom
+        shift: [4.5, -1.2ky]
+      columns:
+        mod:
+          key:
+            splay: -4.5
+        layer:
+          key:
+            spread: 1kx + 2.5
+            splay: -12
+            shift: [0, -2]
+        space:
+          key:
+            spread: 1kx + 2.5
+            splay: -12
+            shift: [0, -4.5]
+      rows:
+        cluster:
 outlines:
 pcbs:
 cases:
