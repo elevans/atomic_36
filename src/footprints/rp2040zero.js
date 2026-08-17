@@ -1,108 +1,144 @@
-// Credit to https://github.com/axhixh/mini-kbd
+// Waveshare RP2040-Zero footprint for Ergogen 4 / KiCad 8.
+//
+// Based on the original footprint credited to:
+// https://github.com/axhixh/mini-kbd
+//
+// `reverse` is retained for config compatibility but intentionally does not
+// duplicate pads. The pads are through-hole and already exist on both copper
+// layers. A truly reversible controller footprint needs a separate mirrored
+// pad/net mapping rather than duplicate pads.
+
 module.exports = {
   params: {
     designator: 'RP2040Zero',
     side: 'F',
     reverse: false,
-    P5V: {type: 'net', value: 'P5V'},
-    GND: {type: 'net', value: 'GND'},
-    P3V3: {type: 'net', value: 'P3V3'},
-    GP29: {type: 'net', value: 'GP29'},
-    GP28: {type: 'net', value: 'GP28'},
-    GP27: {type: 'net', value: 'GP27'},
-    GP26: {type: 'net', value: 'GP26'},
-    GP15: {type: 'net', value: 'GP15'},
-    GP14: {type: 'net', value: 'GP14'},
-    GP13: {type: 'net', value: 'GP13'},
-    GP12: {type: 'net', value: 'GP12'},
-    GP11: {type: 'net', value: 'GP11'},
-    GP10: {type: 'net', value: 'GP10'},
-    GP9: {type: 'net', value: 'GP9'},
-    GP8: {type: 'net', value: 'GP8'},
-    GP7: {type: 'net', value: 'GP7'},
-    GP6: {type: 'net', value: 'GP6'},
-    GP5: {type: 'net', value: 'GP5'},
-    GP4: {type: 'net', value: 'GP4'},
-    GP3: {type: 'net', value: 'GP3'},
-    GP2: {type: 'net', value: 'GP2'},
-    GP1: {type: 'net', value: 'GP1'},
-    GP0: {type: 'net', value: 'GP0'}
+
+    include_button_cutout: true,
+
+    P5V: { type: 'net', value: 'P5V' },
+    GND: { type: 'net', value: 'GND' },
+    P3V3: { type: 'net', value: 'P3V3' },
+    GP29: { type: 'net', value: 'GP29' },
+    GP28: { type: 'net', value: 'GP28' },
+    GP27: { type: 'net', value: 'GP27' },
+    GP26: { type: 'net', value: 'GP26' },
+    GP15: { type: 'net', value: 'GP15' },
+    GP14: { type: 'net', value: 'GP14' },
+    GP13: { type: 'net', value: 'GP13' },
+    GP12: { type: 'net', value: 'GP12' },
+    GP11: { type: 'net', value: 'GP11' },
+    GP10: { type: 'net', value: 'GP10' },
+    GP9: { type: 'net', value: 'GP9' },
+    GP8: { type: 'net', value: 'GP8' },
+    GP7: { type: 'net', value: 'GP7' },
+    GP6: { type: 'net', value: 'GP6' },
+    GP5: { type: 'net', value: 'GP5' },
+    GP4: { type: 'net', value: 'GP4' },
+    GP3: { type: 'net', value: 'GP3' },
+    GP2: { type: 'net', value: 'GP2' },
+    GP1: { type: 'net', value: 'GP1' },
+    GP0: { type: 'net', value: 'GP0' }
   },
+
   body: p => {
-    const standard = `
-    (module RP2040-Zero (layer F.Cu)(tedit 61F3691B)
-      ${p.at /* parametric position */}
-      ${'' /* footprint reference */}
-      (fp_text reference "${p.ref}" (at 10.16 -15.45 ${p.rot}) (layer F.Fab)
-        (effects (font (size 1 1) (thickness 0.15)))
+    const silkLayer = p.side === 'B' ? 'B.SilkS' : 'F.SilkS';
+    const fabLayer = p.side === 'B' ? 'B.Fab' : 'F.Fab';
+
+    const line = (x1, y1, x2, y2, layer, width = 0.12) => `
+      (fp_line
+        (start ${x1} ${y1})
+        (end ${x2} ${y2})
+        (stroke (width ${width}) (type solid))
+        (fill none)
+        (layer "${layer}")
+      )`;
+
+    const pad = (number, x, y, sizeX, sizeY, offsetX, offsetY, net) => `
+      (pad "${number}" thru_hole roundrect
+        (at ${x} ${y} ${p.r})
+        (size ${sizeX} ${sizeY})
+        (drill 1.0922 (offset ${offsetX} ${offsetY}))
+        (layers "*.Cu" "*.Mask")
+        (roundrect_rratio 0.25)
+        ${net.str}
+      )`;
+
+    const outline = `
+      ${line(19.16, -24.45, 1.16, -24.45, silkLayer)}
+      ${line(1.16, -24.45, 1.16, -0.95, silkLayer)}
+      ${line(1.16, -0.95, 19.16, -0.95, silkLayer)}
+      ${line(19.16, -0.95, 19.16, -24.45, silkLayer)}
+
+      ${line(1.16, -24.45, 19.16, -24.45, 'F.CrtYd', 0.05)}
+      ${line(19.16, -24.45, 19.16, -0.95, 'F.CrtYd', 0.05)}
+      ${line(19.16, -0.95, 1.16, -0.95, 'F.CrtYd', 0.05)}
+      ${line(1.16, -0.95, 1.16, -24.45, 'F.CrtYd', 0.05)}
+
+      ${line(5.83, -25.45, 5.83, -24.45, fabLayer, 0.1)}
+      ${line(14.46, -25.45, 14.46, -24.45, fabLayer, 0.1)}
+      ${line(5.83, -25.45, 14.46, -25.45, fabLayer, 0.1)}
+    `;
+
+    // Optional board cutout for access to the BOOT and RESET buttons when
+    // the RP2040-Zero is mounted upside-down.
+    const buttonCutout = p.include_button_cutout ? `
+      ${line(5, -5.13, 15.5, -5.13, 'Edge.Cuts')}
+      ${line(5, -5.13, 5, -10.5, 'Edge.Cuts')}
+      ${line(15.5, -10.5, 15.5, -5.13, 'Edge.Cuts')}
+      ${line(15.5, -10.5, 5, -10.5, 'Edge.Cuts')}
+    ` : '';
+
+    const pads = `
+      ${pad(1, 17.78, -22.86, 2.6, 1.6, 0.6, 0, p.GP0)}
+      ${pad(2, 17.78, -20.32, 2.6, 1.6, 0.6, 0, p.GP1)}
+      ${pad(3, 17.78, -17.78, 2.6, 1.6, 0.6, 0, p.GP2)}
+      ${pad(4, 17.78, -15.24, 2.6, 1.6, 0.6, 0, p.GP3)}
+      ${pad(5, 17.78, -12.70, 2.6, 1.6, 0.6, 0, p.GP4)}
+      ${pad(6, 17.78, -10.16, 2.6, 1.6, 0.6, 0, p.GP5)}
+      ${pad(7, 17.78, -7.62, 2.6, 1.6, 0.6, 0, p.GP6)}
+      ${pad(8, 17.78, -5.08, 2.6, 1.6, 0.6, 0, p.GP7)}
+      ${pad(9, 17.78, -2.54, 2.6, 1.6, 0.6, 0, p.GP8)}
+
+      ${pad(10, 15.24, -2.33, 1.6, 2.6, 0, 0.6, p.GP9)}
+      ${pad(11, 12.70, -2.33, 1.6, 2.6, 0, 0.6, p.GP10)}
+      ${pad(12, 10.16, -2.33, 1.6, 2.6, 0, 0.6, p.GP11)}
+      ${pad(13, 7.62, -2.33, 1.6, 2.6, 0, 0.6, p.GP12)}
+      ${pad(14, 5.08, -2.33, 1.6, 2.6, 0, 0.6, p.GP13)}
+
+      ${pad(15, 2.54, -2.54, 2.6, 1.6, -0.6, 0, p.GP14)}
+      ${pad(16, 2.54, -5.08, 2.6, 1.6, -0.6, 0, p.GP15)}
+      ${pad(17, 2.54, -7.62, 2.6, 1.6, -0.6, 0, p.GP26)}
+      ${pad(18, 2.54, -10.16, 2.6, 1.6, -0.6, 0, p.GP27)}
+      ${pad(19, 2.54, -22.86, 2.6, 1.6, -0.6, 0, p.P5V)}
+      ${pad(20, 2.54, -20.32, 2.6, 1.6, -0.6, 0, p.GND)}
+      ${pad(21, 2.54, -17.78, 2.6, 1.6, -0.6, 0, p.P3V3)}
+      ${pad(22, 2.54, -12.70, 2.6, 1.6, -0.6, 0, p.GP28)}
+      ${pad(23, 2.54, -15.24, 2.6, 1.6, -0.6, 0, p.GP29)}
+    `;
+
+    return `
+      (footprint "RP2040-Zero"
+        (layer "${p.side}.Cu")
+        ${p.at}
+        (attr through_hole)
+
+        (fp_text reference "${p.ref}"
+          (at 10.16 -15.45 ${p.r})
+          (layer "${fabLayer}")
+          (effects (font (size 1 1) (thickness 0.15)))
+        )
+
+        (fp_text value "RP2040-Zero"
+          (at 10.16 -13.90 ${p.r})
+          (layer "${fabLayer}")
+          (effects (font (size 1 1) (thickness 0.15)))
+        )
+
+        ${outline}
+        ${buttonCutout}
+        ${pads}
       )
-      (fp_line (start 19.16 -24.45) (end 1.16 -24.45) (layer F.SilkS) (width 0.12))  
-      (fp_line (start 1.16 -24.45) (end 1.16 -0.95) (layer F.SilkS) (width 0.12))
-      (fp_line (start 1.16 -0.95) (end 19.16 -0.95) (layer F.SilkS) (width 0.12))
-      (fp_line (start 19.16 -0.95) (end 19.16 -24.45) (layer F.SilkS) (width 0.12))
-      (fp_line (start 1.16 -24.45) (end 19.16 -24.45) (layer F.CrtYd) (width 0.05))
-      (fp_line (start 19.16 -24.45) (end 19.16 -0.95) (layer F.CrtYd) (width 0.05))
-      (fp_line (start 19.16 -0.95) (end 1.16 -0.95) (layer F.CrtYd) (width 0.05))
-      (fp_line (start 1.16 -0.95) (end 1.16 -24.45) (layer F.CrtYd) (width 0.05))
-      (fp_line (start 5.83 -25.45) (end 5.83 -24.45) (layer F.Fab) (width 0.1))
-      (fp_line (start 14.46 -25.45) (end 14.46 -24.45) (layer F.Fab) (width 0.1))
-      (fp_line (start 5.83 -25.45) (end 14.46 -25.45) (layer F.Fab) (width 0.1))
-    `
-
-    const hole_for_buttons = `
-      ${ '' /* holes so that we can access reset and boot button on upside down mcu */}
-      (fp_line (start 5 -5.13) (end 15.5 -5.13) (layer Edge.Cuts) (width 0.12))
-      (fp_line (start 5 -5.13) (end 5 -10.5) (layer Edge.Cuts) (width 0.12))
-      (fp_line (start 15.5 -10.5) (end 15.5 -5.13) (layer Edge.Cuts) (width 0.12))
-      (fp_line (start 15.5 -10.5) (end 5 -10.5) (layer Edge.Cuts) (width 0.12))
-      
-    `
-    function pins(def_neg, def_pos) {
-      return `
-        ${'' /* actual pins */}
-        (pad 1 thru_hole roundrect (at 17.78 -22.86 ${p.rot}) (size 2.6 1.6) (drill 1.0922 (offset 0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP0.str})
-        (pad 2 thru_hole roundrect (at 17.78 -20.32 ${p.rot}) (size 2.6 1.6) (drill 1.0922 (offset 0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP1.str})
-        (pad 3 thru_hole roundrect (at 17.78 -17.78 ${p.rot}) (size 2.6 1.6) (drill 1.0922 (offset 0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP2.str})
-        (pad 4 thru_hole roundrect (at 17.78 -15.24 ${p.rot}) (size 2.6 1.6) (drill 1.0922 (offset 0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP3.str})
-        (pad 5 thru_hole roundrect (at 17.78 -12.7 ${p.rot}) (size 2.6 1.6) (drill 1.0922 (offset 0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP4.str})
-        (pad 6 thru_hole roundrect (at 17.78 -10.16 ${p.rot}) (size 2.6 1.6002) (drill 1.0922 (offset 0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP5.str})
-        (pad 7 thru_hole roundrect (at 17.78 -7.62 ${p.rot}) (size 2.6 1.6002) (drill 1.0922 (offset 0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP6.str})
-        (pad 8 thru_hole roundrect (at 17.78 -5.08 ${p.rot}) (size 2.6 1.6002) (drill 1.0922 (offset 0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP7.str})
-        (pad 9 thru_hole roundrect (at 17.78 -2.54 ${p.rot}) (size 2.6 1.6002) (drill 1.0922 (offset 0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP8.str})
-        
-        (pad 10 thru_hole roundrect (at 15.24 -2.33 ${p.rot}) (size 1.6 2.6) (drill 1.0922 (offset 0 0.6)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP9.str})
-        (pad 11 thru_hole roundrect (at 12.7 -2.33 ${p.rot}) (size 1.5748 2.6) (drill 1.0922 (offset 0 0.6)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP10.str})
-        (pad 12 thru_hole roundrect (at 10.16 -2.33 ${p.rot}) (size 1.5748 2.6) (drill 1.0922 (offset 0 0.6)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP11.str})
-        (pad 13 thru_hole roundrect (at 7.62 -2.33 ${p.rot}) (size 1.5748 2.6) (drill 1.0922 (offset 0 0.6)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP12.str})
-        (pad 14 thru_hole roundrect (at 5.08 -2.33 ${p.rot}) (size 1.5748 2.6) (drill 1.0922 (offset 0 0.6)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP13.str})
-
-        (pad 15 thru_hole roundrect (at 2.54 -2.54 ${p.rot}) (size 2.6 1.6002) (drill 1.0922 (offset -0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP14.str})
-        (pad 16 thru_hole roundrect (at 2.54 -5.08 ${p.rot}) (size 2.6 1.6002) (drill 1.0922 (offset -0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP15.str})
-        (pad 17 thru_hole roundrect (at 2.54 -7.62 ${p.rot}) (size 2.6 1.6002) (drill 1.0922 (offset -0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP26.str})
-        (pad 18 thru_hole roundrect (at 2.54 -10.16 ${p.rot}) (size 2.6 1.6002) (drill 1.0922 (offset -0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP27.str})
-        (pad 19 thru_hole roundrect (at 2.54 -22.86 ${p.rot}) (size 2.6 1.6002) (drill 1.0922 (offset -0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.P5V.str})
-        (pad 20 thru_hole roundrect (at 2.54 -20.32 ${p.rot}) (size 2.6 1.6002) (drill 1.0922 (offset -0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GND.str})
-        (pad 21 thru_hole roundrect (at 2.54 -17.78 ${p.rot}) (size 2.6 1.6002) (drill 1.0922 (offset -0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.P3V3.str})
-        (pad 22 thru_hole roundrect (at 2.54 -12.7 ${p.rot}) (size 2.6 1.6002) (drill 1.0922 (offset -0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP28.str})
-        (pad 23 thru_hole roundrect (at 2.54 -15.24 ${p.rot}) (size 2.6 1.6002) (drill 1.0922 (offset -0.6 0)) (layers *.Cu *.Mask) (roundrect_rratio 0.25) ${p.GP29.str})
-      `
-    }
-    if (p.reverse) {
-      return `
-        ${standard}
-        ${hole_for_buttons}
-        ${pins('-', '')}
-        ${pins('', '-')}
-        )
-        `
-    } else {
-      return `
-        ${standard}
-        ${hole_for_buttons}
-        ${pins('-', '')}
-        )
-        `
-    }
+    `;
   }
-  
-}
+};
