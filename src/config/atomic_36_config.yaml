@@ -1,5 +1,5 @@
 meta:
-  engine: 4.1.0
+  engine: 4.2.1
   version: 0.1.0
   author: Edward Evans
 units:
@@ -17,7 +17,7 @@ points:
     matrix:
       # fix kicad placement
       anchor:
-        shift: [50, -150]
+        shift: [75, -150]
       key:
         padding: 1ky
         spread: 1kx
@@ -68,9 +68,9 @@ points:
             shift: [0, -4.2]
       rows:
         cluster:
-  #mirror: &mirror
-  #  ref: matrix_inner_home
-  #  distance: 5kx
+  mirror: &mirror
+    ref: matrix_inner_home
+    distance: 5kx
 outlines:
   raw:
     - what: rectangle
@@ -130,6 +130,56 @@ outlines:
         - ref: matrix_pinky_bottom
           shift: [-0.5px, -0.5py]
       fillet: 2
+  pcb_board_mirror:
+    - what: polygon
+      operation: stack
+      points:
+        - ref: mirror_matrix_pinky_top
+          shift: [-0.5px, 0.5py]
+        - ref: mirror_matrix_pinky_top
+          shift: [0.7px, 0.5py]
+        - ref: mirror_matrix_ring_top
+          shift: [-0.5px, 0.5py]
+        - ref: mirror_matrix_ring_top
+          shift: [0.3px, 0.5py]
+        - ref: mirror_matrix_middle_top
+          shift: [-0.5px, 0.5py]
+        - ref: mirror_matrix_middle_top
+          shift: [0.5px, 0.5py]
+        - ref: mirror_matrix_index_top
+          shift: [-0.3px, 0.5py]
+        - ref: mirror_matrix_index_top
+          shift: [0.4py, 0.5py]
+        - ref: mirror_matrix_inner_top
+          shift: [-0.3px, 0.5py]
+        - ref: mirror_matrix_inner_top
+          shift: [0.5px, 0.5py]
+        # MCU / interconnect space
+        - ref: mirror_matrix_inner_bottom
+          shift: [0.5px, -0.5py]
+        - ref: mirror_thumbs_space_cluster
+          shift: [0.5px, 0.5py]
+        - ref: mirror_thumbs_space_cluster
+          shift: [0.5px, -0.5py]
+        - ref: mirror_thumbs_layer_cluster
+          shift: [0.3px, -0.5py]
+        - ref: mirror_thumbs_layer_cluster
+          shift: [-0.4px, -0.5py]
+        - ref: mirror_thumbs_mod_cluster
+          shift: [-0.5px, -0.5py]
+        - ref: mirror_matrix_index_bottom
+          shift: [-0.3px, -0.5py]
+        - ref: mirror_matrix_middle_bottom
+          shift: [0.3px, -0.7py]
+        - ref: mirror_matrix_middle_bottom
+          shift: [-0.3px, -0.7py]
+        - ref: mirror_matrix_ring_bottom
+          shift: [-0.3px, -0.5py]
+        - ref: mirror_matrix_pinky_bottom
+          shift: [0.5px, -0.5py]
+        - ref: mirror_matrix_pinky_bottom
+          shift: [-0.5px, -0.5py]
+      fillet: 2
   switch_plate:
     - what: polygon
       operation: stack
@@ -180,8 +230,62 @@ outlines:
         - ref: matrix_pinky_bottom
           shift: [-0.5px, -0.5py]
       fillet: 2
+  switch_plate_mirror:
+    - what: polygon
+      operation: stack
+      points:
+        - ref: mirror_matrix_pinky_top
+          shift: [-0.5px, 0.5py]
+        - ref: mirror_matrix_pinky_top
+          shift: [0.7px, 0.5py]
+        - ref: mirror_matrix_ring_top
+          shift: [-0.5px, 0.5py]
+        - ref: mirror_matrix_ring_top
+          shift: [0.3px, 0.5py]
+        - ref: mirror_matrix_middle_top
+          shift: [-0.5px, 0.5py]
+        - ref: mirror_matrix_middle_top
+          shift: [0.5px, 0.5py]
+        - ref: mirror_matrix_index_top
+          shift: [-0.3px, 0.5py]
+        - ref: mirror_matrix_index_top
+          shift: [0.4py, 0.5py]
+        - ref: mirror_matrix_inner_top
+          shift: [-0.3px, 0.5py]
+        - ref: mirror_matrix_inner_top
+          shift: [0.5px, 0.5py]
+        # MCU / interconnect space
+        - ref: mirror_matrix_inner_bottom
+          shift: [0.5px, -0.5py]
+        - ref: mirror_thumbs_space_cluster
+          shift: [0.5px, 0.5py]
+        - ref: mirror_thumbs_space_cluster
+          shift: [0.5px, -0.5py]
+        - ref: mirror_thumbs_layer_cluster
+          shift: [0.3px, -0.5py]
+        - ref: mirror_thumbs_layer_cluster
+          shift: [-0.4px, -0.5py]
+        - ref: mirror_thumbs_mod_cluster
+          shift: [-0.5px, -0.5py]
+        - ref: mirror_matrix_index_bottom
+          shift: [-0.3px, -0.5py]
+        - ref: mirror_matrix_middle_bottom
+          shift: [0.3px, -0.7py]
+        - ref: mirror_matrix_middle_bottom
+          shift: [-0.3px, -0.7py]
+        - ref: mirror_matrix_ring_bottom
+          shift: [-0.3px, -0.5py]
+        - ref: mirror_matrix_pinky_bottom
+          shift: [0.5px, -0.5py]
+        - ref: mirror_matrix_pinky_bottom
+          shift: [-0.5px, -0.5py]
+      fillet: 2
   combo:
     - name: pcb_board
+    - operation: subtract
+      name: keys
+  combo_mirror:
+    - name: pcb_board_mirror
     - operation: subtract
       name: keys
 pcbs:
@@ -192,8 +296,11 @@ pcbs:
         outline: pcb_board
     footprints:
       choc_hotswap:
+        # use regex to split left/right pcb switch pos
+        # if you set where to true, you get them on the same kicad
+        # plane -> maybe use this to have one PCB for manufacture.
+        where: "/^(matrix|thumbs)_/"
         what: ceoloide/switch_choc_v1_v2
-        where: true
         params:
           reversible: false
           hotswap: true
@@ -202,8 +309,8 @@ pcbs:
           from: "{{column_net}}"
           to: "{{colrow}}"
       diode:
+        where: "/^(matrix|thumbs)_/"
         what: ceoloide/diode_tht_sod123
-        where: true
         params:
           from: "{{colrow}}"
           to: "{{row_net}}"
@@ -212,4 +319,31 @@ pcbs:
       mcu:
         what: rp2040zero
         where: matrix_inner_top
+  right_pcb:
+    template: kicad8
+    outlines:
+      main:
+        outline: pcb_board_mirror
+    footprints:
+      choc_hotswap:
+        where: "/^mirror_/"
+        what: ceoloide/switch_choc_v1_v2
+        params:
+          reversible: false
+          hotswap: true
+          solder: false
+          include_keycap: true
+          from: "{{column_net}}"
+          to: "{{colrow}}"
+      diode:
+        where: "/^mirror_/"
+        what: ceoloide/diode_tht_sod123
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+        adjust:
+          shift: [0, -5]
+      mcu:
+        what: rp2040zero
+        where: mirror_matrix_inner_top
 cases:
