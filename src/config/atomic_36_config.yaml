@@ -319,6 +319,9 @@ pcbs:
       mcu:
         what: rp2040zero
         where: matrix_inner_top
+        adjust:
+          shift: [12, -15]
+          rotate: 0
   right_pcb:
     template: kicad8
     outlines:
@@ -346,4 +349,6 @@ pcbs:
       mcu:
         what: rp2040zero
         where: mirror_matrix_inner_top
+        adjust:
+          shift: [-12, -15]
 cases:
