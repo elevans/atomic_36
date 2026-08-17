@@ -102,8 +102,10 @@ outlines:
         - ref: matrix_inner_top
           shift: [0.5px, 0.5py]
         # MCU / interconnect space
+        - ref: matrix_inner_top
+          shift: [1.6px, 0.5py]
         - ref: matrix_inner_bottom
-          shift: [0.5px, -0.5py]
+          shift: [1.6px, -0.5py]
         - ref: thumbs_space_cluster
           shift: [0.5px, 0.5py]
         - ref: thumbs_space_cluster
@@ -195,7 +197,7 @@ pcbs:
         where: "/^(matrix|thumbs)_/"
         what: ceoloide/switch_choc_v1_v2
         params:
-          reversible: false
+          reversible: true
           hotswap: true
           solder: false
           include_keycap: true
@@ -205,6 +207,7 @@ pcbs:
         where: "/^(matrix|thumbs)_/"
         what: ceoloide/diode_tht_sod123
         params:
+          reversible: true
           from: "{{colrow}}"
           to: "{{row_net}}"
         adjust:
@@ -213,7 +216,7 @@ pcbs:
         what: rp2040zero
         where: matrix_inner_top
         params:
-          reverse: true
+          reverse: false
         adjust:
           shift: [0.6px, -0.75py]
           rotate: 0
