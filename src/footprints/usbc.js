@@ -1,217 +1,177 @@
-// USB-C-shaped proprietary serial interconnect for a reversible split PCB.
+// Ergogen v4.2.1 / KiCad 8+
+// USB-C 12-contact USB 2.0 receptacle
+// Compatible with HRO TYPE-C-31-M-12.
 //
-// IMPORTANT: This is NOT USB-C compliant and must only be used as a dedicated
-// keyboard-to-keyboard serial cable. Mark both boards/cases: "SPLIT LINK — NOT USB".
+// The coordinate system and mechanical locations are based on the
+// KiCad HRO TYPE-C-31-M-12 footprint.
 //
-// This footprint targets the same 12-contact USB 2.0 mid-mount receptacle
-// geometry used by the original footprint:
-//   - 12 SMD signal/power contacts
-//   - 4 plated shield/mechanical tabs
-//
-// Cable-flip-safe mapping:
-//   GND: contacts 1 and 12, plus shield tabs
-//   VCC: contacts 2 and 11, optionally enabled
-//   TX:  contacts 5 and 7
-//   RX:  contacts 6 and 8
-//
-// For a reversible PCB, `reversible: true` creates:
-//   - a front-side connector pad pattern
-//   - a mirrored back-side connector pad pattern
-//
-// Only populate ONE connector: front for one keyboard half, back for the other.
-//
-// Never connect this port to a computer, charger, hub, dock, or normal USB
-// peripheral. If each half can be powered independently, leave include_vcc
-// false to prevent accidental power backfeeding.
+// IMPORTANT: Do not set this connector up as a reversible footprint.
+// USB-C plugs are reversible; the physical receptacle is installed on
+// exactly one PCB side.
 
 module.exports = {
   params: {
-    designator: 'SPLIT',
-
-    // Used only when reversible is false.
+    designator: 'J',
     side: 'F',
 
-    // Generate equivalent front and back connector pad patterns.
-    reversible: true,
-
-    // VCC is OFF by default. For UART-only split communication, use GND/TX/RX.
-    include_vcc: false,
-
-    // This must align with and become part of the main board perimeter.
-    // Set false while positioning/debugging, or if you create the cutout in
-    // the main Ergogen board outline instead.
-    include_edge_cutout: true,
-
-    GND: { type: 'net', value: 'GND' },
-    VCC: { type: 'net', value: 'VCC' },
-    TX: { type: 'net', value: 'TX' },
-    RX: { type: 'net', value: 'RX' }
+    GND:  { type: 'net', value: 'GND' },
+    VBUS: { type: 'net', value: 'VBUS' },
+    DP:   { type: 'net', value: 'DP' },
+    DM:   { type: 'net', value: 'DM' },
   },
 
   body: p => {
-    const layersFor = side => ({
-      copper: `${side}.Cu`,
-      paste: `${side}.Paste`,
-      mask: `${side}.Mask`,
-      silk: `${side}.SilkS`,
-      fab: `${side}.Fab`
-    });
+    const layer = p.side === 'B' ? 'B' : 'F';
+    const mirror = p.side === 'B';
 
-    const front = layersFor('F');
-    const back = layersFor('B');
+    // Ergogen generates a complete KiCad net expression in net.str,
+    // such as: (net 1 "GND")
+    const netPart = net => (net && net.str ? ` ${net.str}` : '');
 
-    const line = (x1, y1, x2, y2, layer, width = 0.15) => `
-      (fp_line
-        (start ${x1} ${y1})
-        (end ${x2} ${y2})
-        (stroke (width ${width}) (type solid))
-        (layer "${layer}")
-      )
-    `;
+    // p.r is the footprint placement angle supplied by Ergogen.
+    // It MUST be included in pads so pad geometry rotates with the port.
+    const rotation = p.r || 0;
 
-    // `mirror_x` is required for the back-mounted physical connector:
-    // viewed from the front of the board, its contact order is reflected.
-    const smdPad = (number, x, y, width, height, layers, net = '', mirror_x = false) => `
-      (pad "${number}" smd rect
-        (at ${mirror_x ? -x : x} ${y})
-        (size ${width} ${height})
-        (layers "${layers.copper}" "${layers.paste}" "${layers.mask}")
-        ${net}
-      )
-    `;
+    // Mirror X only for a bottom-side connector placement.
+    const mx = value => (mirror ? -value : value);
 
-    const shieldPad = (x, y, width, height, drill_x, drill_y) => `
-      (pad "13" thru_hole oval
-        (at ${x} ${y})
-        (size ${width} ${height})
-        (drill oval ${drill_x} ${drill_y})
-        (layers "*.Cu" "*.Mask")
-        ${p.GND.str}
-      )
-    `;
+    const smdPad = (number, x, width, net) => `
+  (pad "${number}" smd rect
+    (at ${mx(x)} -4.045 ${rotation})
+    (size ${width} 1.45)
+    (layers "${layer}.Cu" "${layer}.Paste" "${layer}.Mask")${netPart(net)})
+`;
 
-    const connectorPads = (layers, mirror_x) => `
-      ${'' /* Ground contacts */}
-      ${smdPad(1, 3.225, 7.235, 0.6, 1.15, layers, p.GND.str, mirror_x)}
-      ${smdPad(12, -3.225, 7.235, 0.6, 1.15, layers, p.GND.str, mirror_x)}
+    // The pad rotation is particularly important for these:
+    // without it, oval shield holes remain vertical after 90° rotation.
+    const shieldPad = (number, x, y, height) => `
+  (pad "${number}" thru_hole oval
+    (at ${mx(x)} ${y} ${rotation})
+    (size 1 ${height})
+    (drill oval 0.6 ${height - 0.4})
+    (layers "*.Cu" "*.Mask")${netPart(p.GND)})
+`;
 
-      ${'' /* Optional shared split power */}
-      ${smdPad(2, 2.45, 7.235, 0.6, 1.15, layers, p.include_vcc ? p.VCC.str : '', mirror_x)}
-      ${smdPad(11, -2.45, 7.235, 0.6, 1.15, layers, p.include_vcc ? p.VCC.str : '', mirror_x)}
+    const alignmentHole = x => `
+  (pad "" np_thru_hole circle
+    (at ${mx(x)} -2.60 ${rotation})
+    (size 0.65 0.65)
+    (drill 0.65)
+    (layers "*.Cu" "*.Mask"))
+`;
 
-      ${'' /* Unused contacts: leave electrically unconnected */}
-      ${smdPad(3, 1.75, 7.235, 0.3, 1.15, layers, '', mirror_x)}
-      ${smdPad(4, 1.25, 7.235, 0.3, 1.15, layers, '', mirror_x)}
-      ${smdPad(9, -1.25, 7.235, 0.3, 1.15, layers, '', mirror_x)}
-      ${smdPad(10, -1.75, 7.235, 0.3, 1.15, layers, '', mirror_x)}
+    let body = '';
 
-      ${'' /*
-        Reversible cable orientation:
-        contacts 5 and 7 are one wire; contacts 6 and 8 are the other.
-      */}
-      ${smdPad(5, 0.75, 7.235, 0.3, 1.15, layers, p.TX.str, mirror_x)}
-      ${smdPad(7, -0.25, 7.235, 0.3, 1.15, layers, p.TX.str, mirror_x)}
-      ${smdPad(6, 0.25, 7.235, 0.3, 1.15, layers, p.RX.str, mirror_x)}
-      ${smdPad(8, -0.75, 7.235, 0.3, 1.15, layers, p.RX.str, mirror_x)}
-    `;
+    body += '(footprint "USB_C_Receptacle_HRO_TYPE-C-31-M-12"\n';
+    body += `  (layer "${layer}.Cu")\n`;
+    body += `  ${p.at}\n`;
+    body += '  (attr smd)\n';
+    body += '  (descr "HRO TYPE-C-31-M-12 USB-C USB 2.0 top-mount receptacle")\n';
+    body += '  (tags "USB USB-C HRO TYPE-C-31-M-12 USB2")\n';
 
-    const edgeCutout = p.include_edge_cutout ? `
-      ${line(7, 0, 4.64, 0, 'Edge.Cuts')}
-      ${line(-7, 0, -4.64, 0, 'Edge.Cuts')}
-      ${line(-4.64, 0, -4.64, 6.66, 'Edge.Cuts')}
-      ${line(-4.64, 6.66, 4.64, 6.66, 'Edge.Cuts')}
-      ${line(4.64, 6.66, 4.64, 0, 'Edge.Cuts')}
-    ` : '';
+    body += `
+  (fp_text reference "${p.ref}"
+    (at 0 -5.645)
+    (layer "${layer}.SilkS")
+    ${p.ref_hide}
+    (effects (font (size 1 1) (thickness 0.15))))
+`;
 
-    const frontSilk = `
-      (fp_rect
-        (start -6.45 0.35)
-        (end 6.45 7.85)
-        (stroke (width 0.12) (type solid))
-        (fill none)
-        (layer "F.SilkS")
-      )
+    body += `
+  (fp_text value "USB_C_12P"
+    (at 0 5.10)
+    (layer "${layer}.Fab")
+    (effects (font (size 1 1) (thickness 0.15))))
+`;
 
-      (fp_text user "SPLIT LINK"
-        (at 0 4.10)
-        (layer "F.SilkS")
-        (effects (font (size 0.85 0.85) (thickness 0.14)))
-      )
+    // Fabrication body outline.
+    body += `
+  (fp_rect
+    (start ${mx(-4.47)} -3.65)
+    (end ${mx(4.47)} 3.65)
+    (stroke (width 0.10) (type solid))
+    (fill none)
+    (layer "${layer}.Fab"))
+`;
 
-      (fp_text user "NOT USB"
-        (at 0 5.55)
-        (layer "F.SilkS")
-        (effects (font (size 0.75 0.75) (thickness 0.12)))
-      )
-    `;
+    // Courtyard.
+    body += `
+  (fp_rect
+    (start ${mx(-5.32)} -5.27)
+    (end ${mx(5.32)} 4.15)
+    (stroke (width 0.05) (type solid))
+    (fill none)
+    (layer "${layer}.CrtYd"))
+`;
 
-    const backSilk = p.reversible ? `
-      (fp_rect
-        (start -6.45 0.35)
-        (end 6.45 7.85)
-        (stroke (width 0.12) (type solid))
-        (fill none)
-        (layer "B.SilkS")
-      )
+    // Silkscreen, deliberately split around the upper shield holes.
+    body += `
+  (fp_line
+    (start ${mx(-4.70)} -1.90)
+    (end ${mx(-4.70)} 0.10)
+    (stroke (width 0.12) (type solid))
+    (fill none)
+    (layer "${layer}.SilkS"))
+  (fp_line
+    (start ${mx(-4.70)} 2.00)
+    (end ${mx(-4.70)} 3.90)
+    (stroke (width 0.12) (type solid))
+    (fill none)
+    (layer "${layer}.SilkS"))
+  (fp_line
+    (start ${mx(4.70)} -1.90)
+    (end ${mx(4.70)} 0.10)
+    (stroke (width 0.12) (type solid))
+    (fill none)
+    (layer "${layer}.SilkS"))
+  (fp_line
+    (start ${mx(4.70)} 2.00)
+    (end ${mx(4.70)} 3.90)
+    (stroke (width 0.12) (type solid))
+    (fill none)
+    (layer "${layer}.SilkS"))
+  (fp_line
+    (start ${mx(-4.70)} 3.90)
+    (end ${mx(4.70)} 3.90)
+    (stroke (width 0.12) (type solid))
+    (fill none)
+    (layer "${layer}.SilkS"))
+`;
 
-      (fp_text user "SPLIT LINK"
-        (at 0 4.10)
-        (layer "B.SilkS")
-        (effects
-          (font (size 0.85 0.85) (thickness 0.14))
-          (justify mirror)
-        )
-      )
+    // Shell / retention tabs.
+    // The official footprint uses the same shield pad number for all four tabs.
+    body += shieldPad('S1', -4.32,  1.05, 1.60);
+    body += shieldPad('S1',  4.32,  1.05, 1.60);
+    body += shieldPad('S1', -4.32, -3.13, 2.10);
+    body += shieldPad('S1',  4.32, -3.13, 2.10);
 
-      (fp_text user "NOT USB"
-        (at 0 5.55)
-        (layer "B.SilkS")
-        (effects
-          (font (size 0.75 0.75) (thickness 0.12))
-          (justify mirror)
-        )
-      )
-    ` : '';
+    // Mechanical alignment holes.
+    body += alignmentHole(-2.89);
+    body += alignmentHole(2.89);
 
-    const selectedPads = p.reversible
-      ? `
-          ${connectorPads(front, false)}
-          ${connectorPads(back, true)}
-        `
-      : p.side === 'B'
-        ? connectorPads(back, true)
-        : connectorPads(front, false);
+    // USB-C contact row, at 0.5 mm pitch.
+    //
+    // Physical pad positions:
+    //  1 GND, 2 VBUS, 3 SBU2, 4 CC1, 5 D-, 6 D-,
+    //  7 D+, 8 D+, 9 SBU1, 10 CC2, 11 VBUS, 12 GND.
+    //
+    // SBU and CC are intentionally unconnected in this USB-2-only
+    // footprint. A USB-C sink requires external 5.1 kΩ pull-down
+    // resistors from both CC pins to GND.
+    body += smdPad(1,  -3.25, 0.60, p.GND);
+    body += smdPad(2,  -2.45, 0.60, p.VBUS);
+    body += smdPad(3,  -1.75, 0.30, null); // SBU2
+    body += smdPad(4,  -1.25, 0.30, null); // CC1
+    body += smdPad(5,  -0.75, 0.30, p.DM);
+    body += smdPad(6,  -0.25, 0.30, p.DM);
+    body += smdPad(7,   0.25, 0.30, p.DP);
+    body += smdPad(8,   0.75, 0.30, p.DP);
+    body += smdPad(9,   1.25, 0.30, null); // SBU1
+    body += smdPad(10,  1.75, 0.30, null); // CC2
+    body += smdPad(11,  2.45, 0.60, p.VBUS);
+    body += smdPad(12,  3.25, 0.60, p.GND);
 
-    return `
-      (footprint "USB_C_Split_Link_12_Pin_Reversible"
-        (layer "F.Cu")
-        ${p.at}
-        (attr smd)
-
-        (fp_text reference "${p.ref}"
-          (at 0 8.75)
-          (layer "F.SilkS")
-          (effects (font (size 1 1) (thickness 0.15)))
-        )
-
-        (fp_text value "SPLIT-LINK"
-          (at 0 10.10)
-          (layer "F.Fab")
-          (effects (font (size 1 1) (thickness 0.15)))
-        )
-
-        ${edgeCutout}
-        ${frontSilk}
-        ${backSilk}
-
-        ${selectedPads}
-
-        ${'' /* Shared plated shield / mechanical tabs for either mount side */}
-        ${shieldPad(5.62, 6.1, 1, 1.8, 0.6, 1.4)}
-        ${shieldPad(-5.62, 6.1, 1, 1.8, 0.6, 1.4)}
-        ${shieldPad(-5.62, 2.1, 1, 2.2, 0.6, 1.8)}
-        ${shieldPad(5.62, 2.1, 1, 2.2, 0.6, 1.8)}
-      )
-    `;
+    body += ')';
+    return body;
   }
 };
