@@ -99,7 +99,7 @@ outlines:
         - ref: matrix_index_top
           shift: [-0.3px, 0.5py]
         - ref: matrix_index_top
-          shift: [0.4py, 0.5py]
+          shift: [0.4px, 0.5py]
         - ref: matrix_inner_top
           shift: [-0.3px, 0.5py]
         - ref: matrix_inner_top
@@ -149,7 +149,7 @@ outlines:
         - ref: mirror_matrix_index_top
           shift: [-0.3px, 0.5py]
         - ref: mirror_matrix_index_top
-          shift: [0.4py, 0.5py]
+          shift: [0.4px, 0.5py]
         - ref: mirror_matrix_inner_top
           shift: [-0.3px, 0.5py]
         - ref: mirror_matrix_inner_top
@@ -199,7 +199,7 @@ outlines:
         - ref: matrix_index_top
           shift: [-0.3px, 0.5py]
         - ref: matrix_index_top
-          shift: [0.4py, 0.5py]
+          shift: [0.4px, 0.5py]
         - ref: matrix_inner_top
           shift: [-0.3px, 0.5py]
         - ref: matrix_inner_top
@@ -249,7 +249,7 @@ outlines:
         - ref: mirror_matrix_index_top
           shift: [-0.3px, 0.5py]
         - ref: mirror_matrix_index_top
-          shift: [0.4py, 0.5py]
+          shift: [0.4px, 0.5py]
         - ref: mirror_matrix_inner_top
           shift: [-0.3px, 0.5py]
         - ref: mirror_matrix_inner_top
