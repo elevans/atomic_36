@@ -216,8 +216,15 @@ pcbs:
         what: rp2040zero
         where: matrix_inner_top
         params:
+          include_button_cutout: false
           reverse: false
         adjust:
           shift: [0.6px, -0.75py]
+          rotate: 0
+      interconnect:
+        what: usbc
+        where: matrix_inner_home
+        adjust:
+          shift: [2px, -0.5py]
           rotate: 0
 cases:
