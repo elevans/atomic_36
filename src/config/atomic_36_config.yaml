@@ -154,6 +154,7 @@ outlines:
           shift: [-0.3px, 0.5py]
         - ref: matrix_inner_top
           shift: [0.5px, 0.5py]
+        # MCU / interconnect space
         - ref: matrix_inner_bottom
           shift: [0.5px, -0.5py]
         - ref: thumbs_space_cluster
@@ -190,7 +191,7 @@ pcbs:
       main:
         outline: pcb_board
     footprints:
-      keys:
+      choc_hotswap:
         what: ceoloide/switch_choc_v1_v2
         where: true
         params:
@@ -200,4 +201,15 @@ pcbs:
           include_keycap: true
           from: "{{column_net}}"
           to: "{{colrow}}"
+      diode:
+        what: ceoloide/diode_tht_sod123
+        where: true
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+        adjust:
+          shift: [0, -5]
+      mcu:
+        what: rp2040zero
+        where: matrix_inner_top
 cases:
