@@ -51,7 +51,7 @@ points:
         spread: 1kx
       anchor:
         ref: matrix_index_bottom
-        shift: [4.5, -1.2ky]
+        shift: [-3, -1.2ky]
       columns:
         mod:
           key:
