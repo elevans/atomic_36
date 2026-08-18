@@ -225,6 +225,8 @@ pcbs:
         what: usbc
         where: matrix_inner_home
         adjust:
-          shift: [2px, -0.5py]
-          rotate: 0
+          shift: [1.3px, -0.5py]
+          rotate: 90
+        params:
+          reversible: true
 cases:
