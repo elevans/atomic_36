@@ -19,7 +19,7 @@ points:
       anchor:
         shift: [150, -150]
       key:
-        padding: 1ky
+        padding: u
         spread: 1kx
       columns:
         pinky:
