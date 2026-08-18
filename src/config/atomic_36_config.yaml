@@ -197,6 +197,8 @@ pcbs:
           hotswap: true
           solder: false
           include_keycap: true
+          keycap_width: kx
+          keycap_height: ky
           from: "{{column_net}}"
           to: "{{colrow}}"
       diode:
