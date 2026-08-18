@@ -117,9 +117,7 @@ outlines:
         - ref: thumbs_mod_cluster
           shift: [-0.5px, -0.5py]
         - ref: matrix_index_bottom
-          shift: [-0.3px, -0.5py]
-        - ref: matrix_middle_bottom
-          shift: [0.3px, -0.75py]
+          shift: [-0.6px, -0.5py]
         - ref: matrix_middle_bottom
           shift: [-0.3px, -0.75py]
         - ref: matrix_ring_bottom
@@ -167,9 +165,7 @@ outlines:
         - ref: thumbs_mod_cluster
           shift: [-0.5px, -0.5py]
         - ref: matrix_index_bottom
-          shift: [-0.3px, -0.5py]
-        - ref: matrix_middle_bottom
-          shift: [0.3px, -0.7py]
+          shift: [-0.6px, -0.5py]
         - ref: matrix_middle_bottom
           shift: [-0.3px, -0.7py]
         - ref: matrix_ring_bottom
