@@ -117,7 +117,7 @@ outlines:
         - ref: matrix_inner_top
           shift: [1.55px, 0.6py]
         - ref: matrix_inner_bottom
-          shift: [1.77px, -0.5py]
+          shift: [1.78px, -0.5py]
         - ref: thumbs_space_cluster
           shift: [0.5px, 0.5py]
         # end MCU /interconnect space
@@ -237,8 +237,34 @@ pcbs:
         what: usbc
         where: matrix_inner_home
         adjust:
-          shift: [1.45px, -0.8py]
+          shift: [1.55px, -0.8py]
           rotate: 95
         params:
           reversible: true
+      holeTopPinkyLeft:
+        what: ceoloide/mounting_hole_npth
+        where:
+          ref: [matrix_pinky_top]
+          shift: [0.68kx, -0.2ky]
+      holeTopIndexLeft:
+        what: ceoloide/mounting_hole_npth
+        where:
+            ref: [matrix_index_top]
+            shift: [0.63kx, -0.2ky]
+      holeLayerLeft:
+        what: ceoloide/mounting_hole_npth
+        where:
+          ref: [thumbs_layer_cluster]
+          shift: [0.55kx, -0.15ky]
+      holeBottomMiddleMiddle:
+        what: ceoloide/mounting_hole_npth
+        where:
+          ref: [matrix_middle_bottom]
+          shift: [0, -0.7ky]
+      holeBottomRingMiddle:
+        what: ceoloide/mounting_hole_npth
+        where:
+          ref: [matrix_ring_bottom]
+          shift: [-0.5kx, -0.42py]
 cases:
+:
