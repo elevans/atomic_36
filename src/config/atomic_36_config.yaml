@@ -112,14 +112,15 @@ outlines:
         - ref: matrix_inner_top
           shift: [-0.3px, 0.5py]
         - ref: matrix_inner_top
-          shift: [0.5px, 0.5py]
-        # MCU / interconnect space
+          shift: [0.5px, 0.53py]
+        # start MCU / interconnect space
         - ref: matrix_inner_top
-          shift: [1.6px, 0.5py]
+          shift: [1.55px, 0.6py]
         - ref: matrix_inner_bottom
-          shift: [1.6px, -0.5py]
+          shift: [1.77px, -0.5py]
         - ref: thumbs_space_cluster
           shift: [0.5px, 0.5py]
+        # end MCU /interconnect space
         - ref: thumbs_space_cluster
           shift: [0.5px, -0.5py]
         - ref: thumbs_layer_cluster
@@ -162,8 +163,9 @@ outlines:
         - ref: matrix_inner_top
           shift: [-0.3px, 0.5py]
         - ref: matrix_inner_top
-          shift: [0.5px, 0.5py]
-        # MCU / interconnect space
+          shift: [0.5px, 0.53py]
+        # start MCU / interconnect space
+        # end MCU /interconnect space
         - ref: matrix_inner_bottom
           shift: [0.5px, -0.5py]
         - ref: thumbs_space_cluster
@@ -230,13 +232,13 @@ pcbs:
           reverse: false
         adjust:
           shift: [0.6px, -0.75py]
-          rotate: 0
+          rotate: 5
       interconnect:
         what: usbc
         where: matrix_inner_home
         adjust:
           shift: [1.45px, -0.5py]
-          rotate: 90
+          rotate: 95
         params:
           reversible: true
 cases:
