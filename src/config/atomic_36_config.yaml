@@ -231,7 +231,7 @@ pcbs:
           include_button_cutout: false
           reverse: false
         adjust:
-          shift: [0.6px, -0.75py]
+          shift: [0.55px, -0.67py]
           rotate: 5
       interconnect:
         what: usbc
@@ -266,5 +266,24 @@ pcbs:
         where:
           ref: [matrix_ring_bottom]
           shift: [-0.5kx, -0.42py]
+      holeMCUCoverTopLeft:
+        what: ceoloide/mounting_hole_npth
+        where:
+          ref: [matrix_inner_top]
+          shift: [0.49kx, 0.41py]
+      holeMCUCoverTopRight:
+        what: ceoloide/mounting_hole_npth
+        where:
+          ref: [matrix_inner_top]
+          shift: [1.75kx, 0.44py]
+      holeMCUCoverBottomRight:
+        what: ceoloide/mounting_hole_npth
+        where:
+          ref: [matrix_inner_bottom]
+          shift: [2kx, -0.4py]
+      holeMCUCoverBottomLeft:
+        what: ceoloide/mounting_hole_npth
+        where:
+          ref: [matrix_inner_bottom]
+          shift: [0.75kx, -0.2py]
 cases:
-:
