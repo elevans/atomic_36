@@ -225,7 +225,7 @@ outlines:
       radius: mountRadius
       where:
         ref: [matrix_inner_top]
-        shift: [0.49kx, 0.405py]
+        shift: [0.68kx, 0.405py]
     - what: circle
       radius: mountRadius
       where:
@@ -240,7 +240,7 @@ outlines:
       radius: mountRadius
       where:
         ref: [matrix_inner_bottom]
-        shift: [0.75kx, -0.2py]
+        shift: [0.925kx, -0.2py]
   pcb_with_keys:
     - name: pcb_board
     - operation: subtract
@@ -295,7 +295,7 @@ pcbs:
           include_button_cutout: false
           reverse: false
         adjust:
-          shift: [0.55px, -0.67py]
+          shift: [0.71px, -0.67py]
           rotate: 5
       interconnect:
         what: usbc
@@ -334,7 +334,7 @@ pcbs:
         what: ceoloide/mounting_hole_npth
         where:
           ref: [matrix_inner_top]
-          shift: [0.49kx, 0.405py]
+          shift: [0.68kx, 0.405py]
       holeMCUCoverTopRight:
         what: ceoloide/mounting_hole_npth
         where:
@@ -349,7 +349,7 @@ pcbs:
         what: ceoloide/mounting_hole_npth
         where:
           ref: [matrix_inner_bottom]
-          shift: [0.75kx, -0.2py]
+          shift: [0.925kx, -0.2py]
 cases:
   bottom_case:
     - name: pcb_board
