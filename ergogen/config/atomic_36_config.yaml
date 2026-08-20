@@ -230,12 +230,12 @@ outlines:
       radius: mountRadius
       where:
         ref: [matrix_inner_top]
-        shift: [1.75kx, 0.5py]
+        shift: [1.95kx, 0.5py]
     - what: circle
       radius: mountRadius
       where:
         ref: [matrix_inner_bottom]
-        shift: [2.05kx, -0.4py]
+        shift: [2.23kx, -0.4py]
     - what: circle
       radius: mountRadius
       where:
@@ -339,12 +339,12 @@ pcbs:
         what: ceoloide/mounting_hole_npth
         where:
           ref: [matrix_inner_top]
-          shift: [1.75kx, 0.5py]
+          shift: [1.95kx, 0.5py]
       holeMCUCoverBottomRight:
         what: ceoloide/mounting_hole_npth
         where:
           ref: [matrix_inner_bottom]
-          shift: [2.05kx, -0.4py]
+          shift: [2.23kx, -0.4py]
       holeMCUCoverBottomLeft:
         what: ceoloide/mounting_hole_npth
         where:
