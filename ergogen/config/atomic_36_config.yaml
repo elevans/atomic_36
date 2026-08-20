@@ -220,16 +220,43 @@ outlines:
       where:
         ref: [matrix_ring_bottom]
         shift: [-0.5kx, -0.42py]
+  pcb_mcu_cover_mounting:
+    - what: circle
+      radius: mountRadius
+      where:
+        ref: [matrix_inner_top]
+        shift: [0.49kx, 0.405py]
+    - what: circle
+      radius: mountRadius
+      where:
+        ref: [matrix_inner_top]
+        shift: [1.75kx, 0.5py]
+    - what: circle
+      radius: mountRadius
+      where:
+        ref: [matrix_inner_bottom]
+        shift: [2.05kx, -0.4py]
+    - what: circle
+      radius: mountRadius
+      where:
+        ref: [matrix_inner_bottom]
+        shift: [0.75kx, -0.2py]
   pcb_with_keys:
     - name: pcb_board
     - operation: subtract
       name: keys
     - operation: subtract
       name: pcb_switch_plate_mounting
+    - operation: subtract
+      name: pcb_mcu_cover_mounting
   switch_plate_with_holes:
     - name: switch_plate
     - operation: subtract
+      name: keys
+    - operation: subtract
       name: pcb_switch_plate_mounting
+    - operation: subtract
+      name: pcb_mcu_cover_mounting
 pcbs:
   board:
     template: kicad8
@@ -307,17 +334,17 @@ pcbs:
         what: ceoloide/mounting_hole_npth
         where:
           ref: [matrix_inner_top]
-          shift: [0.49kx, 0.41py]
+          shift: [0.49kx, 0.405py]
       holeMCUCoverTopRight:
         what: ceoloide/mounting_hole_npth
         where:
           ref: [matrix_inner_top]
-          shift: [1.75kx, 0.44py]
+          shift: [1.75kx, 0.5py]
       holeMCUCoverBottomRight:
         what: ceoloide/mounting_hole_npth
         where:
           ref: [matrix_inner_bottom]
-          shift: [2kx, -0.4py]
+          shift: [2.05kx, -0.4py]
       holeMCUCoverBottomLeft:
         what: ceoloide/mounting_hole_npth
         where:
