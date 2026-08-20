@@ -15,6 +15,8 @@ units:
   # render choc spacings
   $default_width: cx
   $default_height: cy
+  # mount hole radius
+  mountRadius: 1
 points:
   zones:
     matrix:
@@ -192,10 +194,42 @@ outlines:
         - ref: matrix_pinky_bottom
           shift: [-0.5px, -0.5py]
       fillet: 2
-  combo:
+  pcb_switch_plate_mounting:
+    - what: circle
+      radius: mountRadius
+      where:
+        ref: [matrix_pinky_top]
+        shift: [0.68kx, -0.2ky]
+    - what: circle
+      radius: mountRadius
+      where:
+        ref: [matrix_index_top]
+        shift: [0.63kx, -0.2ky]
+    - what: circle
+      radius: mountRadius
+      where:
+        ref: [thumbs_layer_cluster]
+        shift: [0.55kx, -0.15ky]
+    - what: circle
+      radius: mountRadius
+      where:
+        ref: [matrix_middle_bottom]
+        shift: [0, -0.7ky]
+    - what: circle
+      radius: mountRadius
+      where:
+        ref: [matrix_ring_bottom]
+        shift: [-0.5kx, -0.42py]
+  pcb_with_keys:
     - name: pcb_board
     - operation: subtract
       name: keys
+    - operation: subtract
+      name: pcb_switch_plate_mounting
+  switch_plate_with_holes:
+    - name: switch_plate
+    - operation: subtract
+      name: pcb_switch_plate_mounting
 pcbs:
   board:
     template: kicad8
