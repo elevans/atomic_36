@@ -9,6 +9,9 @@ units:
   # padding vars
   px: kx + 4
   py: ky + 4
+  # case padding vars
+  dpx: kx + 8
+  dpy: ky + 8
   # render choc spacings
   $default_width: cx
   $default_height: cy
@@ -287,3 +290,9 @@ pcbs:
           ref: [matrix_inner_bottom]
           shift: [0.75kx, -0.2py]
 cases:
+  bottom_case:
+    - name: pcb_board
+      extrude: 1
+  switch_plate_case:
+    - name: switch_plate
+      extrude: 1
