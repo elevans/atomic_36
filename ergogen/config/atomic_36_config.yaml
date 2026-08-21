@@ -376,3 +376,6 @@ cases:
   switch_plate_case:
     - name: switch_plate_with_holes
       extrude: 1
+  mcu_cover_case:
+    - name: mcu_cover_with_holes
+      extrude: 1
