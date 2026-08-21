@@ -22,7 +22,7 @@
 
 module.exports = {
   params: {
-    designator: 'RP2040ZeroFaceDown',
+    designator: 'RP2040Zero',
     side: 'F',
     reverse: false,
 
@@ -135,7 +135,7 @@ module.exports = {
     `;
 
     return `
-      (footprint "RP2040-Zero (face down)"
+      (footprint "RP2040-Zero"
         (layer "${p.side}.Cu")
         ${p.at}
         (attr through_hole)
@@ -146,7 +146,7 @@ module.exports = {
           (effects (font (size 1 1) (thickness 0.15)))
         )
 
-        (fp_text value "RP2040-Zero (face down)"
+        (fp_text value "RP2040-Zero"
           (at 10.16 -13.90 ${p.r})
           (layer "${fabLayer}")
           (effects (font (size 1 1) (thickness 0.15)))
