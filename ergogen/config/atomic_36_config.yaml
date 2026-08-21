@@ -199,14 +199,14 @@ outlines:
       operation: stack
       points:
         - ref: matrix_inner_top
-          shift: [0.575kx, 0.405py]
+          shift: [0.57kx, 0.505py]
         - ref: matrix_inner_top
-          shift: [2.05kx, 0.52py]
+          shift: [2.05kx, 0.62py]
         - ref: matrix_inner_bottom
-          shift: [2.33kx, -0.4py]
+          shift: [2.38kx, -0.54py]
         - ref: matrix_inner_bottom
-          shift: [0.825kx, -0.2py]
-      fillet: 0
+          shift: [0.84kx, -0.3py]
+      fillet: 1.5
   pcb_switch_plate_mounting:
     - what: circle
       radius: mountRadius
@@ -238,22 +238,22 @@ outlines:
       radius: mountRadius
       where:
         ref: [matrix_inner_top]
-        shift: [0.575kx, 0.405py]
+        shift: [0.7kx, 0.405py]
     - what: circle
       radius: mountRadius
       where:
         ref: [matrix_inner_top]
-        shift: [2.05kx, 0.52py]
+        shift: [1.95kx, 0.5py]
     - what: circle
       radius: mountRadius
       where:
         ref: [matrix_inner_bottom]
-        shift: [2.33kx, -0.4py]
+        shift: [2.23kx, -0.4py]
     - what: circle
       radius: mountRadius
       where:
         ref: [matrix_inner_bottom]
-        shift: [0.825kx, -0.2py]
+        shift: [0.95kx, -0.2py]
   pcb_with_keys:
     - name: pcb_board
     - operation: subtract
@@ -312,7 +312,7 @@ pcbs:
           include_button_cutout: false
           reverse: false
         adjust:
-          shift: [0.71px, -0.67py]
+          shift: [0.715px, -0.67py]
           rotate: 5
       interconnect:
         what: usbc
@@ -351,7 +351,7 @@ pcbs:
         what: ceoloide/mounting_hole_npth
         where:
           ref: [matrix_inner_top]
-          shift: [0.68kx, 0.405py]
+          shift: [0.7kx, 0.405py]
       holeMCUCoverTopRight:
         what: ceoloide/mounting_hole_npth
         where:
@@ -366,7 +366,7 @@ pcbs:
         what: ceoloide/mounting_hole_npth
         where:
           ref: [matrix_inner_bottom]
-          shift: [0.925kx, -0.2py]
+          shift: [0.95kx, -0.2py]
 cases:
   bottom_case:
     - name: pcb_board
