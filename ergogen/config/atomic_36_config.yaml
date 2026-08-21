@@ -199,9 +199,9 @@ outlines:
       operation: stack
       points:
         - ref: matrix_inner_top
-          shift: [0.57kx, 0.505py]
+          shift: [0.57kx, 0.535py]
         - ref: matrix_inner_top
-          shift: [2.05kx, 0.62py]
+          shift: [2.08kx, 0.62py]
         - ref: matrix_inner_bottom
           shift: [2.38kx, -0.54py]
         - ref: matrix_inner_bottom
@@ -254,14 +254,6 @@ outlines:
       where:
         ref: [matrix_inner_bottom]
         shift: [0.95kx, -0.2py]
-  pcb_with_keys:
-    - name: pcb_board
-    - operation: subtract
-      name: keys
-    - operation: subtract
-      name: pcb_switch_plate_mounting
-    - operation: subtract
-      name: pcb_mcu_cover_mounting
   mcu_cover_with_holes:
     - name: mcu_cover
     - operation: subtract
@@ -274,6 +266,14 @@ outlines:
       name: pcb_switch_plate_mounting
     - operation: subtract
       name: pcb_mcu_cover_mounting
+  complete_view:
+    - name: pcb_board
+    - operation: subtract
+      name: keys
+    - operation: subtract
+      name: switch_plate_with_holes
+    - operation: subtract
+      name: mcu_cover_with_holes
 pcbs:
   board:
     template: kicad8
