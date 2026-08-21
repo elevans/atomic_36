@@ -194,6 +194,19 @@ outlines:
         - ref: matrix_pinky_bottom
           shift: [-0.5px, -0.5py]
       fillet: 2
+  mcu_cover:
+    - what: polygon
+      operation: stack
+      points:
+        - ref: matrix_inner_top
+          shift: [0.575kx, 0.405py]
+        - ref: matrix_inner_top
+          shift: [2.05kx, 0.52py]
+        - ref: matrix_inner_bottom
+          shift: [2.33kx, -0.4py]
+        - ref: matrix_inner_bottom
+          shift: [0.825kx, -0.2py]
+      fillet: 0
   pcb_switch_plate_mounting:
     - what: circle
       radius: mountRadius
@@ -225,28 +238,32 @@ outlines:
       radius: mountRadius
       where:
         ref: [matrix_inner_top]
-        shift: [0.68kx, 0.405py]
+        shift: [0.575kx, 0.405py]
     - what: circle
       radius: mountRadius
       where:
         ref: [matrix_inner_top]
-        shift: [1.95kx, 0.5py]
+        shift: [2.05kx, 0.52py]
     - what: circle
       radius: mountRadius
       where:
         ref: [matrix_inner_bottom]
-        shift: [2.23kx, -0.4py]
+        shift: [2.33kx, -0.4py]
     - what: circle
       radius: mountRadius
       where:
         ref: [matrix_inner_bottom]
-        shift: [0.925kx, -0.2py]
+        shift: [0.825kx, -0.2py]
   pcb_with_keys:
     - name: pcb_board
     - operation: subtract
       name: keys
     - operation: subtract
       name: pcb_switch_plate_mounting
+    - operation: subtract
+      name: pcb_mcu_cover_mounting
+  mcu_cover_with_holes:
+    - name: mcu_cover
     - operation: subtract
       name: pcb_mcu_cover_mounting
   switch_plate_with_holes:
@@ -289,7 +306,7 @@ pcbs:
         adjust:
           shift: [0, -5]
       mcu:
-        what: rp2040zero
+        what: rp2040zero_down
         where: matrix_inner_top
         params:
           include_button_cutout: false
