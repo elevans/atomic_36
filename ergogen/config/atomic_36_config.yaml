@@ -42,17 +42,17 @@ points:
         middle:
           key:
             stagger: 5
-            column_net: GP11
+            column_net: GP13
         index:
           key:
             stagger: -5
-            column_net: GP10
+            column_net: GP12
         inner:
           key:
             spread: 1kx + 1.2
             splay: -5
             stagger: -2.0
-            column_net: GP9
+            column_net: GP11
       rows:
         bottom:
           row_net: GP27
@@ -71,19 +71,19 @@ points:
         mod:
           key:
             splay: -4.5
-            column_net: GP11
+            column_net: GP13
         layer:
           key:
             spread: 1kx + 2.5
             splay: -12
             shift: [0, -2.1]
-            column_net: GP10
+            column_net: GP12
         space:
           key:
             spread: 1kx + 3
             splay: -12
             shift: [0, -4.2]
-            column_net: GP9
+            column_net: GP11
       rows:
         cluster:
           row_net: GP26
