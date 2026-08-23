@@ -122,7 +122,7 @@ outlines:
           shift: [0.5px, 0.53py]
         # start MCU / interconnect space
         - ref: matrix_inner_top
-          shift: [1.7px, 0.62py]
+          shift: [1.7px, 0.64py]
         - ref: matrix_inner_bottom
           shift: [1.94px, -0.5py]
         - ref: thumbs_space_cluster
@@ -205,7 +205,7 @@ outlines:
         - ref: matrix_inner_top
           shift: [0.57kx, 0.535py]
         - ref: matrix_inner_top
-          shift: [2.08kx, 0.62py]
+          shift: [2.08kx, 0.64py]
         - ref: matrix_inner_bottom
           shift: [2.38kx, -0.54py]
         - ref: matrix_inner_bottom
