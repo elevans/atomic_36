@@ -17,8 +17,6 @@ units:
   $default_height: cy
   # mount hole radius
   mountRadius: 1
-# note that GP12 and GP13 are reserved for the serial connection
-# (full duplex)
 points:
   zones:
     matrix:
@@ -328,47 +326,51 @@ pcbs:
         params:
           reversible: true
       holeTopPinkyLeft:
-        what: ceoloide/mounting_hole_npth
+        what: ceoloide/mounting_hole_plated
         where:
           ref: [matrix_pinky_top]
           shift: [0.68kx, -0.2ky]
       holeTopIndexLeft:
-        what: ceoloide/mounting_hole_npth
+        what: ceoloide/mounting_hole_plated
         where:
             ref: [matrix_index_top]
             shift: [0.63kx, -0.2ky]
       holeLayerLeft:
-        what: ceoloide/mounting_hole_npth
+        what: ceoloide/mounting_hole_plated
         where:
           ref: [thumbs_layer_cluster]
           shift: [0.55kx, -0.15ky]
       holeBottomMiddleMiddle:
-        what: ceoloide/mounting_hole_npth
+        what: ceoloide/mounting_hole_plated
         where:
           ref: [matrix_middle_bottom]
           shift: [0, -0.7ky]
       holeBottomRingMiddle:
-        what: ceoloide/mounting_hole_npth
+        what: ceoloide/mounting_hole_plated
         where:
           ref: [matrix_ring_bottom]
           shift: [-0.5kx, -0.42py]
       holeMCUCoverTopLeft:
-        what: ceoloide/mounting_hole_npth
+        what: ceoloide/mounting_hole_plated
         where:
           ref: [matrix_inner_top]
           shift: [0.7kx, 0.405py]
+        params:
+            outline: 0.4
       holeMCUCoverTopRight:
-        what: ceoloide/mounting_hole_npth
+        what: ceoloide/mounting_hole_plated
         where:
           ref: [matrix_inner_top]
           shift: [1.95kx, 0.5py]
+        params:
+          outline: 0.4
       holeMCUCoverBottomRight:
-        what: ceoloide/mounting_hole_npth
+        what: ceoloide/mounting_hole_plated
         where:
           ref: [matrix_inner_bottom]
           shift: [2.23kx, -0.4py]
       holeMCUCoverBottomLeft:
-        what: ceoloide/mounting_hole_npth
+        what: ceoloide/mounting_hole_plated
         where:
           ref: [matrix_inner_bottom]
           shift: [0.95kx, -0.2py]
