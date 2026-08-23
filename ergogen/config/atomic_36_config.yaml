@@ -305,6 +305,7 @@ pcbs:
         what: ceoloide/diode_tht_sod123
         params:
           reversible: true
+          include_traces_vias: true
           from: "{{colrow}}"
           to: "{{row_net}}"
         adjust:
