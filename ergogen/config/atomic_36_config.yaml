@@ -16,7 +16,7 @@ units:
   $default_width: cx
   $default_height: cy
   # mount hole radius
-  mountRadius: 1
+  mountRadius: 1.2
 points:
   zones:
     matrix:
@@ -383,4 +383,4 @@ cases:
       extrude: 1
   mcu_cover_case:
     - name: mcu_cover_with_holes
-      extrude: 1
+      extrude: 3
