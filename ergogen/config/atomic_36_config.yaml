@@ -201,13 +201,13 @@ outlines:
       operation: stack
       points:
         - ref: matrix_inner_top
-          shift: [0.57kx, 0.535py]
+          shift: [0.54kx, 0.535py]
         - ref: matrix_inner_top
           shift: [2.08kx, 0.64py]
         - ref: matrix_inner_bottom
           shift: [2.38kx, -0.54py]
         - ref: matrix_inner_bottom
-          shift: [0.84kx, -0.3py]
+          shift: [0.81kx, -0.3py]
       fillet: 1.5
   pcb_switch_plate_mounting:
     - what: circle
