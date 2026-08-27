@@ -94,7 +94,7 @@ outlines:
   keys:
     - what: rectangle
       where: true
-      size: [13.8, 13.8]
+      size: [14.0, 14.0]
   pcb_board:
     - what: polygon
       operation: stack
@@ -395,7 +395,7 @@ cases:
       extrude: 2
   switch_plate_case:
     - name: switch_plate_with_holes
-      extrude: 1
+      extrude: 1.2
   mcu_cover_case:
     - name: mcu_cover_with_holes
       extrude: 3
