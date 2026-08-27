@@ -17,6 +17,7 @@ units:
   $default_height: cy
   # mount hole radius
   mountRadius: 1.2
+  caseWallHeight: 5.5
 points:
   zones:
     matrix:
@@ -282,6 +283,14 @@ outlines:
       name: switch_plate_with_holes
     - operation: subtract
       name: mcu_cover_with_holes
+  # 2mm-wide ring traced around base_plate_with_holes: grow a copy by 2mm,
+  # then subtract the original, leaving just the border. Extrude this in
+  # the cases section to form the case side walls.
+  board_case_border:
+    - name: pcb_board
+      expand: 2
+    - operation: subtract
+      name: pcb_board
 pcbs:
   board:
     template: kicad8
@@ -390,3 +399,13 @@ cases:
   mcu_cover_case:
     - name: mcu_cover_with_holes
       extrude: 3
+  board_case:
+    - name: base_plate_with_holes
+      extrude: 2
+    - operation: subtract
+      name: pcb_mcu_cover_mounting
+    - operation: subtract
+      name: pcb_switch_plate_mounting
+    - name: board_case_border
+      extrude: caseWallHeight
+      operation: add
