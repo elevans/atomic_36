@@ -169,11 +169,11 @@ outlines:
         - ref: matrix_inner_top
           shift: [-0.3px, 0.5py]
         - ref: matrix_inner_top
-          shift: [0.5px, 0.53py]
+          shift: [0.4px, 0.53py]
         # start MCU / interconnect space
         # end MCU /interconnect space
         - ref: matrix_inner_bottom
-          shift: [0.7px, -0.325py]
+          shift: [0.6px, -0.325py]
         - ref: matrix_inner_bottom
           shift: [1.91px, -0.53py]
         - ref: thumbs_space_cluster
