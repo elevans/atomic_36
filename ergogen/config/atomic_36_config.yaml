@@ -291,6 +291,13 @@ outlines:
       expand: 2
     - operation: subtract
       name: pcb_board
+    - what: rectangle
+      operation: subtract
+      where: matrix_inner_home
+      size: [10, 10]
+      adjust:
+        shift: [1.78px, -0.8py]
+        rotate: 95
 pcbs:
   board:
     template: kicad8
