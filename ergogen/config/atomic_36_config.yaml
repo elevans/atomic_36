@@ -298,6 +298,13 @@ outlines:
       adjust:
         shift: [1.78px, -0.8py]
         rotate: 95
+  case_border_usbc_support:
+    - what: rectangle
+      where: matrix_inner_home
+      size: [10, 9]
+      adjust:
+        shift: [1.78px, -0.8py]
+        rotate: 95
 pcbs:
   board:
     template: kicad8
@@ -413,6 +420,9 @@ cases:
       name: pcb_mcu_cover_mounting
     - operation: subtract
       name: pcb_switch_plate_mounting
+    - name: case_border_usbc_support
+      extrude: 2
+      operation: add
     - name: board_case_border
       extrude: caseWallHeight
       operation: add
