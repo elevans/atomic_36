@@ -17,7 +17,7 @@ units:
   $default_height: cy
   # mount hole radius
   mountRadius: 1.2
-  caseWallHeight: 5.5
+  caseWallHeight: 7.5
 points:
   zones:
     matrix:
@@ -288,7 +288,7 @@ outlines:
   # the cases section to form the case side walls.
   board_case_border:
     - name: pcb_board
-      expand: 2
+      expand: 2.5
     - operation: subtract
       name: pcb_board
     - what: rectangle
@@ -301,7 +301,7 @@ outlines:
   case_border_usbc_support:
     - what: rectangle
       where: matrix_inner_home
-      size: [10, 9]
+      size: [10, 10]
       adjust:
         shift: [1.78px, -0.8py]
         rotate: 95
