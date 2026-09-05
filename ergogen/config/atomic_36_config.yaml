@@ -17,7 +17,7 @@ units:
   $default_height: cy
   # mount hole radius
   mountRadius: 1.2
-  caseWallHeight: 7.5
+  caseWallHeight: 9
 points:
   zones:
     matrix:
@@ -271,7 +271,7 @@ outlines:
       name: pcb_mcu_cover_mounting
   pcb_board_with_clearance:
     - name: pcb_board
-      expand: 0.2
+      expand: 0.4
   base_plate_with_holes:
     - name: pcb_board_with_clearance
     - operation: subtract
@@ -291,20 +291,20 @@ outlines:
   # the cases section to form the case side walls.
   board_case_border:
     - name: pcb_board
-      expand: 2.7
+      expand: 2.9
     - operation: subtract
       name: pcb_board_with_clearance
     - what: rectangle
       operation: subtract
       where: matrix_inner_home
-      size: [9.3, 11]
+      size: [9.3, 10.7]
       adjust:
         shift: [1.78px, -0.8py]
         rotate: 95
   case_border_usbc_support:
     - what: rectangle
       where: matrix_inner_home
-      size: [9.3, 11]
+      size: [9.3, 10.7]
       adjust:
         shift: [1.78px, -0.8py]
         rotate: 95
