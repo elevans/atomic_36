@@ -21,10 +21,10 @@ layers = 3
 
 [[keymap.layer]] # layer 0
 keys = """
-Q     W     E     R     T         Y      U     I        O     P
-A     S     D     F     G         H      J     K        L     Semicolon
-Z     X     C     V     B         N      M     Comma    Dot   Slash
-            LCtrl MO(1) Space     Enter  MO(2) RShift
+Q           W     E     R     T         Y      U     I        O     P
+MT(A, LGui) S     D     F     G         H      J     K        L     Semicolon
+Z           X     C     V     B         N      M     Comma    Dot   MT(Slash, RAlt)
+                  LCtrl MO(1) Space     Enter  MO(2) RShift
 """
 
 [[keymap.layer]] # layer 1
@@ -42,6 +42,14 @@ _                WM(Grave, LShift)  Grave            Quote            _         
 _                _                  _                _                _                     WM(Minus, LShift) KpPlus           WM(LeftBracket, LShift) WM(RightBracket, LShift)  WM(Backslash, LShift)
                                     LCtrl            MO(1)            Space                 Enter             MO(2)            RShift
 """
+
+# default profile for HRM with all tap-hold features
+[behavior.morse]
+enable_flow_tap = true
+prior_idle_time = "120ms"
+hold_on_other_press = true
+hold_timeout = "250ms"
+gap_timeout = "250ms"
 
 [storage]
 enabled = true
