@@ -21,20 +21,27 @@ layers = 3
 
 [[keymap.layer]] # layer 0
 keys = """
-Q     W     E     R     T       Y     U     I     O     P
-A     S     D     F     G       H     J     K     L     scln
-Z     X     C     V     B       H     M     comm    .     /
-            l_gui MO(1) spc     ent   MO(2) rsft
+Q     W     E     R     T         Y      U     I        O     P
+A     S     D     F     G         H      J     K        L     Semicolon
+Z     X     C     V     B         N      M     Comma    Dot   Slash
+            LCtrl MO(1) Space     Enter  MO(2) RShift
 """
 
 [[keymap.layer]] # layer 1
 keys = """
-Q     W     E     R     T       Y     U     I     O     P
-A     S     D     F     G       H     J     K     L     scln
-Z     X     C     V     B       H     M     comm    .     /
-            l_gui MO(1) spc     ent   MO(2) rsft
+Kc1     Kc2        Kc3        Kc4        Kc5         Kc6        Kc7        Kc8       Kc9        Kc0
+Tab     Home       PageDown   PageUp     End         Left       Down       Up        Right      Backspace
+Escape  _          _          _          _           _          _          _         _          Delete
+                   LCtrl      MO(1)      Space       Enter      MO(2)      RShift
 """
 
+[[keymap.layer]] # layer 2
+keys = """
+WM(Kc1, LShift)  WM(Kc2, LShift)    WM(Kc3, LShift)  WM(Kc4, LShift)  WM(Kc5, LShift)       WM(Kc6, LShift)   WM(Kc7, LShift)  WM(Kc8, LShift)         WM(Kc9, LShift)           WM(Kc0, LShift)
+_                WM(Grave, LShift)  Grave            Quote            _                     KpMinus           KpEqual          LeftBracket             RightBracket              Backslash
+_                _                  _                _                _                     WM(Minus, LShift) KpPlus           WM(LeftBracket, LShift) WM(RightBracket, LShift)  WM(Backslash, LShift)
+                                    LCtrl            MO(1)            Space                 Enter             MO(2)            RShift
+"""
 
 [storage]
 enabled = true
@@ -47,7 +54,7 @@ rows = 4
 cols = 5
 row_offset = 0
 col_offset = 0
-serial = [{ instance = "UART1", tx_pin = "PIN_8", rx_pin = "PIN_9" }]
+serial = [{ instance = "PIO0", tx_pin = "PIN_8", rx_pin = "PIN_8" }]
 
 [split.central.matrix]
 matrix_type = "normal"
@@ -60,7 +67,7 @@ rows = 4
 cols = 5
 row_offset = 0
 col_offset = 5
-serial = [{ instance = "UART1", tx_pin = "PIN_8", rx_pin = "PIN_9" }]
+serial = [{ instance = "PIO0", tx_pin = "PIN_9", rx_pin = "PIN_9" }]
 
 [split.peripheral.matrix]
 matrix_type = "normal"
