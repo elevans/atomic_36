@@ -22,8 +22,8 @@ layers = 4
 [[keymap.layer]] # layer 0
 keys = """
 Q           W     E     R     T         Y      U     I        O     P
-MT(A, LGui) S     D     F     G         H      J     K        L     Semicolon
-Z           X     C     V     B         N      M     Comma    Dot   MT(Slash, RAlt)
+A           S     D     F     G         H      J     K        L     Semicolon
+MT(Z, LGui) X     C     V     B         N      M     Comma    Dot   MT(Slash, RAlt)
                   LCtrl MO(1) Space     Enter  MO(2) RShift
 """
 
@@ -37,10 +37,10 @@ Escape  _          _          _          _           _          _          _    
 
 [[keymap.layer]] # layer 2
 keys = """
-WM(Kc1, LShift)  WM(Kc2, LShift)    WM(Kc3, LShift)  WM(Kc4, LShift)  WM(Kc5, LShift)       WM(Kc6, LShift)   WM(Kc7, LShift)  WM(Kc8, LShift)         WM(Kc9, LShift)           WM(Kc0, LShift)
-_                WM(Grave, LShift)  Grave            Quote            _                     KpMinus           KpEqual          LeftBracket             RightBracket              Backslash
-_                _                  _                _                _                     WM(Minus, LShift) KpPlus           WM(LeftBracket, LShift) WM(RightBracket, LShift)  WM(Backslash, LShift)
-                                    LCtrl            MO(1)            Space                 Enter             MO(2)            RShift
+WM(Kc1, LShift)  WM(Kc2, LShift)    WM(Kc3, LShift)  WM(Kc4, LShift)   WM(Kc5, LShift)       WM(Kc6, LShift)   WM(Kc7, LShift)  WM(Kc8, LShift)         WM(Kc9, LShift)           WM(Kc0, LShift)
+_                WM(Grave, LShift)  Grave            WM(Quote, LShift) Quote                     KpMinus           KpEqual          LeftBracket             RightBracket              Backslash
+_                _                  _                _                 _                     WM(Minus, LShift) KpPlus           WM(LeftBracket, LShift) WM(RightBracket, LShift)  WM(Backslash, LShift)
+                                    LCtrl            MO(1)             Space                 Enter             MO(2)            RShift
 """
 
 [[keymap.layer]] # layer 3
@@ -59,10 +59,8 @@ adjust = 3
 # default profile for HRM with all tap-hold features
 [behavior.morse]
 enable_flow_tap = true
-prior_idle_time = "120ms"
-hold_on_other_press = true
-hold_timeout = "250ms"
-gap_timeout = "250ms"
+prior_idle_time = "150ms"
+hold_timeout = "150ms"
 
 [storage]
 enabled = true
